@@ -8,4 +8,3 @@ def uppercase(str):
             uni_code = uni_code - 32
         print("{}".format(chr(uni_code)), end='')
     print()
-
