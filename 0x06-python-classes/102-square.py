@@ -1,53 +1,62 @@
 #!/usr/bin/python3
-class Square:
-    """Represents a square.
-    Private instance attribute: size:
-        - property def size(self)
-        - property setter def size(self, value)
-    Instantiation with optional size.
-    Public instance method: def area(self).
-    """
+"""Square module.
+module defines a square and its size and checking
+if the given values are right, and a setter and getter methods to set or get
+it. Some equivalence methods are present to help handles the use of
+comparators. There's also an area method that returns the area of the square.
+"""
+
+
+class Square():
+    """Defines a square."""
 
     def __init__(self, size=0):
-        """Initializes the data."""
-        self.__size = size
+        """Sets the necessary attributes for the Square object.
+        Args:
+            size (int): the size of one side of the square.
+        """
+        self.size = size
 
     def __eq__(self, other):
-        """Equal."""
-        if hasattr(other, 'size'):
-            return self.__size == other.__size
-        return self.__size == other
-
-    def __ne__(self, other):
-        """Not equal."""
-        return not self.__eq__(other)
+        """Sets the compare equality behavior of the Square object.
+        Args:
+            other (Square): the Square object to compare with.
+        """
+        if type(other) is Square:
+            return self.area() == other.area()
 
     def __lt__(self, other):
-        """Less than."""
-        if hasattr(other, 'size'):
-            return self.__size < other.__size
-        return self.__size < other
+        """Sets the compare less than behavior of the Square object.
+        Args:
+            other (Square): the Square object to compare with.
+        """
+        if type(other) is Square:
+            return self.area() < other.area()
 
     def __le__(self, other):
-        """Less than or equal."""
-        if hasattr(other, 'size'):
-            return self.__size <= other.__size
-        return self.__size <= other
+        """Sets the compare less equal than behavior of the Square object.
+        Args:
+            other (Square): the Square object to compare with.
+        """
+        if type(other) is Square:
+            return self.area() <= other.area()
 
     @property
     def size(self):
-        """Retrieves the size."""
+        """Get or set the size of the square."""
         return self.__size
 
     @size.setter
     def size(self, value):
-        """Sets the size to a value."""
-        if not isinstance(value, int) or not isinstance(value, float):
-            raise TypeError("size must be a number")
-        elif value < 0:
-            raise ValueError("size must be >= 0")
-        self.__size = value
+        if type(value) is int:
+            if value >= 0:
+                self.__size = value
+            else:
+                raise ValueError("size must be >= 0")
+        else:
+            raise TypeError("size must be an integer")
 
     def area(self):
         """Returns the current square area."""
+
         return self.__size ** 2
