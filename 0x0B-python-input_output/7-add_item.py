@@ -1,18 +1,20 @@
 #!/usr/bin/python3
-'''
-Module that adds args to JSON file
-'''
+"""
+Save Module
+"""
+import json
 
-import sys
-import os
 
-arg_list = sys.argv[1:]
+def save_to_json_file(my_obj, filename):
+    """write an object to a text file
+    args:
+        my_obj: object to manipulate
+    filename:
+        filename: text file
+    return:
+        object
+    """
 
-save_JSON = __import__('5-save_to_json_file').save_to_json_file
-load_JSON = __import__('6-load_from_json_file').load_from_json_file
-
-lisst = []
-if os.path.exists('add_item.json'):
-    lisst = load_JSON('add_item.json')
-
-save_JSON(lisst + arg_list, "add_item.json")
+    with open(filename, "w", encoding="utf-8") as f:
+        written = json.dump(my_obj, f)
+    return written
