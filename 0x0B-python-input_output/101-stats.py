@@ -1,52 +1,30 @@
 #!/usr/bin/python3
 import sys
+import io
 
+#input = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
+#with open(input, "r", encoding="utf-8") as file:
+ #   for line in file:
+  #      print(line)
 
-def print_info():
-    print('File size: {:d}'.format(file_size))
+#input = io.TextIOWrapper(sys.stdin , encoding='utf-8')
 
-    for scode, code_times in sorted(status_codes.items()):
-        if code_times > 0:
-            print('{}: {:d}'.format(scode, code_times))
-
-
-status_codes = {
-    '200': 0,
-    '301': 0,
-    '400': 0,
-    '401': 0,
-    '403': 0,
-    '404': 0,
-    '405': 0,
-    '500': 0
-}
-
-lc = 0
-file_size = 0
-
-try:
-    for line in sys.stdin:
-        if lc != 0 and lc % 10 == 0:
-            print_info()
-
-        pieces = line.split()
-
-        try:
-            status = int(pieces[-2])
-
-            if str(status) in status_codes.keys():
-                status_codes[str(status)] += 1
-        except:
-            pass
-
-        try:
-            file_size += int(pieces[-1])
-        except:
-            pass
-
-        lc += 1
-
-    print_info()
-except KeyboardInterrupt:
-    print_info()
-    raise
+dictstatus = {}
+totalsize = 0
+totalcount = 0
+for line in sys.stdin:
+    split = line.split()
+    status = split[-2]
+    totalsize += int(split[-1])
+    if status in dictstatus.keys():
+        dictstatus[status] += 1
+    else:
+        dictstatus[status] = 1
+    totalcount += 1
+    if totalcount == 10:
+        sortme = sorted(dictstatus.keys())
+        print("File size:", totalsize)
+        for keys in sortme:
+            print("{}: {}".format(keys, dictstatus[keys]))
+        totalcount = 0
+        continue
