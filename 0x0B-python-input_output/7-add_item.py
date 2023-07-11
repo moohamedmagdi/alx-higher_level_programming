@@ -1,20 +1,16 @@
 #!/usr/bin/python3
 """
-Save Module
+adds all arguments to a Python list
 """
-import json
+import sys
 
 
-def save_to_json_file(my_obj, filename):
-    """write an object to a text file
-    args:
-        my_obj: object to manipulate
-    filename:
-        filename: text file
-    return:
-        object
-    """
+save = __import__('5-save_to_json_file').save_to_json_file
+load = __import__('6-load_from_json_file').load_from_json_file
 
-    with open(filename, "w", encoding="utf-8") as f:
-        written = json.dump(my_obj, f)
-    return written
+open("add_item.json", "a")
+try:
+    i = load("add_item.json")
+except ValueError:
+    i = []
+save(i + sys.argv[1:], "add_item.json")
